@@ -1,14 +1,14 @@
 package com.cg.flightmgmt.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
+//import javax.persistence.Table;
 
-@Entity
-@Table
+//@Entity
+//@Table
 public class ScheduledFlight {
-
+//@Id
+private int id;
 private Flight flight;
 private int availableSeats;
 private Schedule schedule;
