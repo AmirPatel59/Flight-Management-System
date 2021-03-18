@@ -25,11 +25,11 @@ public class UserService implements IUserService {
 		return userData;
 	}
 
-	@Override
-	public User validateUser(User user) throws UserNotFoundException {
-		
-		return null;
-	}
+//	@Override
+//	public User validateUser(User user) throws UserNotFoundException {
+//		
+//		return null;
+//	}
 
 	@Override
 	public User updateUser(User user) throws UserNotFoundException {
@@ -41,7 +41,9 @@ public class UserService implements IUserService {
 	@Override
 	public User removeUser(BigInteger userId) throws UserNotFoundException {
 		// TODO Auto-generated method stub
-		return userRepository.removeUser(userId);
+		User user = new User();
+		userRepository.deleteById(userId);
+		return user;
 	}
 
 }
