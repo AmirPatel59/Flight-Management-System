@@ -10,8 +10,8 @@ import com.cg.flightmgmt.dto.Customer;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
 //	public Customer addCustomer(Customer cust);
-	public Customer updateCustomer(Customer cust);
-	public Customer removeCustomer(Customer cust);
-	public Customer viewCustomer(Customer cust);
+//	public Customer updateCustomer(Customer cust);
+//	public Customer removeCustomer(Customer cust);
+//	public Customer viewCustomer(Customer cust);
 
 }
