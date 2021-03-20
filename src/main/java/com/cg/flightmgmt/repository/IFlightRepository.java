@@ -8,16 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.cg.flightmgmt.dto.Flight;
 import com.cg.flightmgmt.exception.FlightNotFoundException;
-
 @Repository
-public interface IFlightRepository extends JpaRepository<Flight, BigInteger> {
-
-	public Flight addFlight(Flight flight);
-	public Flight viewFlight(BigInteger flightno) throws FlightNotFoundException;
-	public Set<Flight> viewAllFlights();
-
-	public Flight removeFlight(BigInteger flightno);
-	//public Flight removeFlight(Flight flight);
-	public Flight updateFlight(Flight flight);
-	
+public interface IFlightRepository extends JpaRepository<Flight, BigInteger>{
+//
+//	public Flight addFlight(Flight flight);
+//	public Flight viewFlight(BigInteger flightno) throws FlightNotFoundException;
+//	public Set<Flight> viewAllFlights();
+//	public Flight removeFlight(BigInteger flightno);
+//	public Flight updateFlight(Flight flight);
 }

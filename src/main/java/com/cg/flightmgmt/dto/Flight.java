@@ -6,32 +6,48 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 @Entity
-@Table(name="flight_details")
+@Table
 public class Flight {
 	@Id
 	@GeneratedValue
-   private BigInteger flightId;
-   private String carrierName;
-   private String flightModel;
-   private int seatCapacity;
+private BigInteger flightId;
+	@NotEmpty(message = "Carrier Name should not be Empty")
+private String carrierName;
+	@NotEmpty(message = "Flight model should not be Empty")
+private String flightModel;
+	@Max(value = 200)
+private int seatCapacity;
+
+	
+	
+	
+public Flight(@NotEmpty(message = "Carrier Name should not be Empty") String carrierName,
+			@NotEmpty(message = "Flight model should not be Empty") String flightModel, @Max(200) int seatCapacity) {
+		super();
+		this.carrierName = carrierName;
+		this.flightModel = flightModel;
+		this.seatCapacity = seatCapacity;
+	}
+
+
+public Flight(BigInteger flightId, @NotEmpty(message = "Carrier Name should not be Empty") String carrierName,
+			@NotEmpty(message = "Flight model should not be Empty") String flightModel, @Max(200) int seatCapacity) {
+		super();
+		this.flightId = flightId;
+		this.carrierName = carrierName;
+		this.flightModel = flightModel;
+		this.seatCapacity = seatCapacity;
+	}
+
+
 public Flight() {
 	super();
-	// TODO Auto-generated constructor stub
 }
-public Flight(BigInteger flightId, String carrierName, String flightModel, int seatCapacity) {
-	super();
-	this.flightId = flightId;
-	this.carrierName = carrierName;
-	this.flightModel = flightModel;
-	this.seatCapacity = seatCapacity;
-}
-public Flight(String carrierName, String flightModel, int seatCapacity) {
-	super();
-	this.carrierName = carrierName;
-	this.flightModel = flightModel;
-	this.seatCapacity = seatCapacity;
-}
+
+
 public BigInteger getFlightId() {
 	return flightId;
 }
@@ -61,7 +77,7 @@ public String toString() {
 	return "Flight [flightId=" + flightId + ", carrierName=" + carrierName + ", flightModel=" + flightModel
 			+ ", seatCapacity=" + seatCapacity + "]";
 }
-   
-   
+
+
 
 }
