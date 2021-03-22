@@ -1,10 +1,13 @@
 package com.cg.flightmgmt.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.flightmgmt.dto.Schedule;
 import com.cg.flightmgmt.dto.ScheduledFlight;
 import com.cg.flightmgmt.exception.FlightNotFoundException;
 import com.cg.flightmgmt.exception.FlightScheduleNotFoundException;
@@ -73,11 +78,13 @@ public class ScheduledFlightController {
 	}
 	
 	
-//	@GetMapping("/viewAllScheduled")
-//	public ResponseEntity<List<ScheduledFlight>> viewAllScheduled(){
-//		List<ScheduledFlight> scheduledFlightData=service.viewAllScheduledFlights(null);
-//		return new ResponseEntity<List<ScheduledFlight>>(scheduledFlightData,HttpStatus.OK);
-//	}
+	@GetMapping("/viewAllScheduleByDate")
+	public ResponseEntity<List<ScheduledFlight>> viewAllScheduled(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date){
+
+		List<ScheduledFlight> scheduledFlightData=service.viewAllScheduledFlights(date);
+		return new ResponseEntity<List<ScheduledFlight>>(scheduledFlightData,HttpStatus.OK);
+	}
 	
+
 	
 }

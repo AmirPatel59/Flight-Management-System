@@ -3,13 +3,10 @@ package com.cg.flightmgmt.controller;
 import java.math.BigInteger;
 import java.util.Set;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +21,13 @@ import com.cg.flightmgmt.exception.FlightNotFoundException;
 import com.cg.flightmgmt.service.IFlightService;
 
 @RestController
-
 @RequestMapping("/fms/controller/flightController")
 public class FlightController{
 	@Autowired
 	IFlightService service;
 	
 	@PostMapping("/addFlight")
-	public ResponseEntity<Flight> addFlight(@Valid @RequestBody Flight flight){
+	public ResponseEntity<Flight> addFlight(@RequestBody Flight flight){
 		Flight flightData=service.addFlight(flight);
 		return new ResponseEntity<Flight>(flightData,HttpStatus.OK);
 		
@@ -55,13 +51,19 @@ public class FlightController{
 	@DeleteMapping("/removeFlight/{id}")
 	  public ResponseEntity<Flight> removeFlight(@PathVariable BigInteger id) throws FlightNotFoundException{
 	 Flight flightData=service.removeFlight(id);
+	 if(flightData==null) {
+		 throw new FlightNotFoundException("Flight Id not found");
+	 }
+	 flightData=null;
 	 return new ResponseEntity<Flight>(flightData,HttpStatus.OK);
 	}
 	
 	@PutMapping("/updateFlight")
-
-	public ResponseEntity<Flight> updateFlight(@Valid @RequestBody Flight flight) throws FlightNotFoundException {
+	public ResponseEntity<Flight> updateEmployee(@RequestBody Flight flight) throws FlightNotFoundException {
 		Flight flightData = service.updateFlight(flight);
+		if(flightData==null) {
+			 throw new FlightNotFoundException("Flight Id not found");
+		}
 		return new ResponseEntity<Flight>(flightData, HttpStatus.OK);
 	}
 	

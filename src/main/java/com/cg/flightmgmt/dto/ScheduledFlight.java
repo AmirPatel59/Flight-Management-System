@@ -23,19 +23,17 @@ private int availableSeats;
 private double fares; //cost per seat
 
 
-public ScheduledFlight(int scheduleFlightId) {
-	super();
-	this.scheduleFlightId = scheduleFlightId;
-}
+//Mapping 
 @OneToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="scheduleId", referencedColumnName = "scheduleId")
 private Schedule schedule;
 
 
 
-@OneToOne(cascade = CascadeType.ALL)
+@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
 @JoinColumn(name="flightId", referencedColumnName = "flightId")
 private Flight flight;
+
 //constructors
 public ScheduledFlight() {
 	super();
@@ -55,6 +53,9 @@ public ScheduledFlight(int availableSeats, double fares, Schedule schedule, Flig
 	this.schedule = schedule;
 	this.flight = flight;
 }
+
+//Getters & Setters
+
 public int getScheduleFlightId() {
 	return scheduleFlightId;
 }

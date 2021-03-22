@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.flightmgmt.dto.Booking;
+import com.cg.flightmgmt.dto.User;
 import com.cg.flightmgmt.exception.BookingNotFoundException;
 import com.cg.flightmgmt.service.IFlightBookingService;
 
@@ -83,4 +84,10 @@ public class BookingController {
 //		List<Booking> list=bookingService.viewBookingList(id);
 //		return new ResponseEntity<List<Booking>>(list,HttpStatus.OK);
 //	}
+	
+	@GetMapping("/viewBookingHistory/{userId}")
+	public ResponseEntity<List<Booking>> viewBookingHistory(@PathVariable BigInteger userId){
+		List<Booking> list=bookingService.viewBookingHistory(userId);
+		return new ResponseEntity<List<Booking>>(list,HttpStatus.OK);
+	}
 }

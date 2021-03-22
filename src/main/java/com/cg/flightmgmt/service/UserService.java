@@ -1,7 +1,6 @@
 package com.cg.flightmgmt.service;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,64 +13,44 @@ import com.cg.flightmgmt.repository.IUserRepository;
 
 @Service
 @Transactional
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
 	@Autowired
 	IUserRepository userRepository;
-	
+
 	@Override
 	public User addUser(User user) {
-		
-		User userData = userRepository.save(user);
-		return userData;
+		return userRepository.save(user);
 	}
 
-	
-	
-	
 	@Override
 	public User updateUser(User user) throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		BigInteger userId=user.getUserId();
-		User used=userRepository.findById(userId).orElse(null);
-		if(used==null) {
-			return null;
-		}
-		else {
-			return userRepository.save(user);	
-		}
+		Optional<User> optionalUser = userRepository.findById(user.getUserId());
+		User userFromRepo = optionalUser.orElseThrow(() -> new UserNotFoundException("User Id Not Found."));
+		userFromRepo.setEmail(user.getEmail());
+		userFromRepo.setMobileNumber(user.getMobileNumber());
+		userFromRepo.setPassword(user.getPassword());
+		userFromRepo.setUserId(user.getUserId());
+		userFromRepo.setUserName(user.getUserName());
+		userFromRepo.setUserType(user.getUserType());
+		return userRepository.save(userFromRepo);
 	}
-	
+
 	@Override
-	public User removeUser(BigInteger userId) throws UserNotFoundException {
-		// TODO Auto-generated method stub
-		User user = userRepository.findById(userId).orElse(null);
-		if(user==null) {
-			return null;
-		}
+	public void removeUser(BigInteger userId) throws UserNotFoundException {
+		Optional<User> optionalUser = userRepository.findById(userId);
+		User user = optionalUser.orElseThrow(() -> new UserNotFoundException("User Id Not Found."));
 		user.setBooking(null);
 		userRepository.deleteById(userId);
-		return user;
 	}
 
 	@Override
 	public User validateUser(User user) throws UserNotFoundException {
-	Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
-		if(!userOptional.isPresent()){
-			 throw new UserNotFoundException("User not found for email " );
+		Optional<User> optionalUser = userRepository.findByUserName(user.getUserName());
+		User userFromRepo = optionalUser.orElseThrow(() -> new UserNotFoundException("Please enter valid user id."));
+		if(!user.getPassword().equals(userFromRepo.getPassword())) {
+			throw new UserNotFoundException("Password does not match.");
 		}
-		return user;
+		return userFromRepo;
 	}
-
-//
-//	@Override
-//	public User validateUser(User user) throws UserNotFoundException {
-//		// TODO Auto-generated method stub
-//		List<User> list=userRepository.findAll();
-//		if(!list.contains(user)) {
-//			return null;
-//		}
-//		return user;
-//	}
-//	
 }

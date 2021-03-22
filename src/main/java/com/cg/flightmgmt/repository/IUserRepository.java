@@ -10,9 +10,5 @@ import com.cg.flightmgmt.dto.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, BigInteger>  {
-	Optional<User> findByEmail(String email);
-//	public User addUser(User user);
-//	public User validateUser(User user) throws UserNotFoundException;
-//	public User updateUser(User user) throws UserNotFoundException;
-//	public User removeUser(BigInteger userid) throws UserNotFoundException;
-	}
+	Optional<User> findByUserName(String userName);
+}

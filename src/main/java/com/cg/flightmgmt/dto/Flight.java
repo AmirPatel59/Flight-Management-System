@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 @Entity
 @Table
@@ -19,6 +20,7 @@ private String carrierName;
 	@NotEmpty(message = "Flight model should not be Empty")
 private String flightModel;
 	@Max(value = 200)
+	@Min(value=150)
 private int seatCapacity;
 
 	

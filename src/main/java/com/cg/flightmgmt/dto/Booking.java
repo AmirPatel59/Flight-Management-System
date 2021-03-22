@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,7 +27,10 @@ public class Booking {
 	@Id
 	@GeneratedValue
 	private BigInteger bookingId;
-	//private User userId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId")
+	private User userId;
 	private LocalDate bookingDate;
 
 	@Digits(fraction = 0, integer = 5)

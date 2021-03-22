@@ -72,5 +72,11 @@ public class FlightBookingService implements IFlightBookingService {
 ////		List<Booking> b=bookingRepository.findByFlight(flight);
 //		return null;
 //	}
+	@Override
+	public List<Booking> viewBookingHistory(BigInteger userid) {
+		// TODO Auto-generated method stub
+		
+		return bookingRepository.viewBookingHistory(userid);
+	}
 
 }

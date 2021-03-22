@@ -28,6 +28,7 @@ public interface IFlightBookingRepository extends JpaRepository<Booking, BigInte
 
 //	@Query("select booking from Booking booking where booking.flight.flightId =: flightId")
 //	public List<Booking> viewBookingList(BigInteger flightid);
-//	public List<Booking> viewBookingHistory(BigInteger userid);
+	@Query(value = "select b from Booking b where b.userId in (:userid)")
+	public List<Booking> viewBookingHistory(BigInteger userid);
 //	public Booking updateBooking(Booking booking);
 }
