@@ -11,8 +11,6 @@ public interface IFlightService {
 	public Flight addFlight(Flight flight);
 	public Flight viewFlight(BigInteger flightno) throws FlightNotFoundException;
 	public Set<Flight> viewAllFlights();
-	public Flight removeFlight(BigInteger flightno);
-	//Flight removeFlight(Flight flight);
-	public Flight updateFlight(Flight flight);
-	
+	public Flight removeFlight(BigInteger flightno) throws FlightNotFoundException;
+	public Flight updateFlight(Flight flight) throws FlightNotFoundException;
 }

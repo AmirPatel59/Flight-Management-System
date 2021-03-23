@@ -10,5 +10,5 @@ public interface IUserService {
 	public User addUser(User user);
 	public User validateUser(User user) throws UserNotFoundException;
 	public User updateUser(User user) throws UserNotFoundException;
-	public User removeUser(BigInteger userId) throws UserNotFoundException;
-	}
+	public void removeUser(BigInteger userid) throws UserNotFoundException;
+}

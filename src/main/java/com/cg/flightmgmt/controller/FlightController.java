@@ -1,7 +1,6 @@
 package com.cg.flightmgmt.controller;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.flightmgmt.dto.Flight;
 import com.cg.flightmgmt.exception.FlightNotFoundException;
+
 import com.cg.flightmgmt.service.IFlightService;
 
-
 @RestController
-//@RequestMapping("")
-public class FlightController {
-
+@RequestMapping("/fms/controller/flightController")
+public class FlightController{
 	@Autowired
-	IFlightService flightservice;
+	IFlightService service;
 	
 	@PostMapping("/addFlight")
 	public ResponseEntity<Flight> addFlight(@RequestBody Flight flight){
-		Flight flightData=flightservice.addFlight(flight);
-		return new ResponseEntity<Flight>(flightData, HttpStatus.OK);
+		Flight flightData=service.addFlight(flight);
+		return new ResponseEntity<Flight>(flightData,HttpStatus.OK);
+		
 	}
 	
 	@GetMapping("/viewFlight/{id}")
 	public ResponseEntity<Flight> viewFlight(@PathVariable BigInteger id) throws FlightNotFoundException{
-		Flight flight=flightservice.viewFlight(id);
+		Flight flight=service.viewFlight(id);
 		if(flight==null) {
 			throw new FlightNotFoundException("No Flight is available with the given FlightId " + id);
 		}
@@ -45,19 +44,27 @@ public class FlightController {
 	
 	@GetMapping("viewAllFlights")
 	public ResponseEntity<Set<Flight>> viewAllFlights(){
-		Set<Flight> flightList=flightservice.viewAllFlights();
+		Set<Flight> flightList=service.viewAllFlights();
 		return new ResponseEntity<Set<Flight>>(flightList,HttpStatus.OK);	
 	}
 	
 	@DeleteMapping("/removeFlight/{id}")
-	  public ResponseEntity<Flight> removeFlight(@PathVariable BigInteger id){
-	 Flight flightData=flightservice.removeFlight(id);
+	  public ResponseEntity<Flight> removeFlight(@PathVariable BigInteger id) throws FlightNotFoundException{
+	 Flight flightData=service.removeFlight(id);
+	 if(flightData==null) {
+		 throw new FlightNotFoundException("Flight Id not found");
+	 }
+	 flightData=null;
 	 return new ResponseEntity<Flight>(flightData,HttpStatus.OK);
 	}
-	 
+	
 	@PutMapping("/updateFlight")
-	public ResponseEntity<Flight> updateEmployee(@RequestBody Flight flight) {
-		Flight flightData = flightservice.updateFlight(flight);
+	public ResponseEntity<Flight> updateEmployee(@RequestBody Flight flight) throws FlightNotFoundException {
+		Flight flightData = service.updateFlight(flight);
+		if(flightData==null) {
+			 throw new FlightNotFoundException("Flight Id not found");
+		}
 		return new ResponseEntity<Flight>(flightData, HttpStatus.OK);
 	}
+	
 }
